@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    
+    <title>Factura</title>
+    <script>
+        var contar =localStorage.setItem("lista").length;
+        var lista=[];
+        function guardar(){
+            var personas={}; //defino el objeto
+            var nom=document.getElementById('nombre').value;//obtengo los valores
+            var edad=document.getElementById('edad').value;
+            
+            personas.nombre= nom;//guardo los valores
+            personas.edad=edad;
+           alert("contar");
+            
+            lista.push(personas); //agrego los valores al final de la colección
+            localStorage.setItem("lista",JSON.stringify(lista)); //Guardo la lista en localStorage
+            mostrar(lista);//llamo a la funcion para mostrar los datos
+        }
+
+        function mostrar(lista){
+
+        var tabla = "<table border =1> <th> Productos </th><th> Precios </th>"; //escribe el encabezado
+        for (i=0; i<lista.length; i++){
+
+            tabla+="<tr align='center'><td>" + lista[i].nombre + "</td><td>" + lista[i].edad +"</td></tr>";
+        }
+        tabla+="</table>";
+        document.getElementById('lista').innerHTML=tabla;
+        }
+
+        function ordenar(){
+            lista.sort( function(ant, sig){
+                return ant.edad-sig.edad; //comparo el campo edad
+            });
+            mostrar(lista);
+        }
+        function ordenonombre(){
+            lista.sort( function(ant, sig){ //comparando el campo nombre
+                if (ant.nombre > sig.nombre){
+                    return 1;
+                }
+                if (ant.nombre < sig.nombre) {
+                    return -1;
+                } 
+                return 0;
+            
+            });
+            mostrar(lista);
+        }
+    </script>
+     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">TIENDA ES LA 3</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="Fact.html">Inicio <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="carrito.html">Carrito <span class="sr-only">(current)</span></a>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Mi lista
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <a class="dropdown-item" href="#">Mi Perfil</a>
+                <div class="dropdown-divider"></div>
+                
+                <a class="dropdown-item" href="#">Mi Carrito<span class="badge btn-danger" id="aborrar">0 </span></a>
+                <div class="dropdown-divider"></div>
+                <a><button class="btn btn-danger dropdown">Salir</button></a>
+              </div>
+            </li>
+            
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+          </form>
+        </div>
+      </nav> 
+<div class="container">
+   <h2> Factura </h2>
+   <label>Fecha:</label>
+   <input type="date" id="fecha"> <br>
+   <label>Producto:</label>  
+   <input type="text" id="nombre"><br>
+   <label>Precio: </label> &nbsp;&nbsp;&nbsp;&nbsp;
+   <input type="number" id="edad"><br><br>
+
+<button class="btn btn-primary" onclick="guardar();">Guardar</button>
+<button class="btn btn-primary" onclick="ordenar();">Ordenar por edad</button>
+<button class="btn btn-primary" onclick="ordenonombre();"><i class="fas fa-sort-amount-up-alt"></i></button><br><br>
+<div id="lista"></div><br>
+
+</div>
+</body>
+</html>
